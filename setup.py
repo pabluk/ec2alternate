@@ -9,6 +9,8 @@ setup(
     url='https://github.com/pabluk/ec2alternate',
     packages=['ec2alternate'],
 
-    entry_points={'console_scripts': ['ec2alternate = ec2alternate.main:main']},
+    entry_points={
+        'console_scripts': ['ec2alternate = ec2alternate.main:main']
+    },
     install_requires=['boto >= 2.0'],
 )
