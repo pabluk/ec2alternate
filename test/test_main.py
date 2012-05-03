@@ -15,7 +15,7 @@ class MainTest(unittest.TestCase):
         self.instance_ids = ['i-1111', 'i-2222']
 
         self.out = StringIO()
-        self.patcher = patch('ec2admin.instances.' \
+        self.patcher = patch('ec2alternate.instances.' \
                              'InstanceManager._get_instances')
         self.mock_method = self.patcher.start()
         self.mock_method.return_value = get_instances_mock(self.instance_ids)
