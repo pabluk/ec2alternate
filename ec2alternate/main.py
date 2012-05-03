@@ -43,10 +43,10 @@ def process_command_line(argv):
        and not (options.aws_access_key_id and options.aws_secret_access_key):
         parser.error("You must set your AWS credentials. " \
             "Please edit your configuration file %s" % settings.USER_SETTINGS)
-    if not settings.INSTANCES and not options.instances:
-        parser.error("You must specify an instance list. " \
+    if not (settings.INSTANCE_ID1 or settings.INSTANCE_ID2) \
+       and not options.instances:
+        parser.error("You must specify your AWS instances. " \
             "Please edit your configuration file %s" % settings.USER_SETTINGS)
-
     return args[0], options
 
 
@@ -56,7 +56,7 @@ def main(argv=None, out=sys.stdout):
     if options.instances:
         instances = options.instances.split(',')
     else:
-        instances = settings.INSTANCES
+        instances = [settings.INSTANCE_ID1, settings.INSTANCE_ID2]
     if options.aws_access_key_id and options.aws_secret_access_key:
         access_key_id = options.aws_access_key_id
         secret_access_key = options.aws_secret_access_key

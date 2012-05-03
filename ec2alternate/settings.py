@@ -6,7 +6,8 @@ USER_SETTINGS = os.path.join(APP_DIR, 'settings.py')
 COMMANDS = ['status', 'start', 'stop', 'restart']
 
 # Default settings
-INSTANCES = []
+INSTANCE_ID1 = ''
+INSTANCE_ID2 = ''
 AWS_ACCESS_KEY_ID = ''
 AWS_SECRET_ACCESS_KEY = ''
 
