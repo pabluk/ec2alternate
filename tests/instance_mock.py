@@ -13,7 +13,7 @@ class EC2InstanceMock():
     def start(self):
         self.state = 'running'
         if not self.ip_address:
-            self.ip_address = self.random_ip_addr()
+            self.ip_address = self._random_ip_addr()
         self.launch_time = self._launch_time()
 
     def stop(self):
