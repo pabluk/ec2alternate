@@ -63,8 +63,9 @@ class InstanceManager(object):
         instances = []
         conn = EC2Connection(self.access_key_id, self.secret_access_key)
         reservations = conn.get_all_instances()
-        for reservation in reservations:
-            for instance in reservation.instances:
-                if instance.id in instance_id_list:
-                    instances.append(instance)
+        for instance_id in instance_id_list:
+            for reservation in reservations:
+                for instance in reservation.instances:
+                    if instance.id == instance_id:
+                        instances.append(instance)
         return instances

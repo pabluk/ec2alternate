@@ -3,7 +3,8 @@ import optparse
 
 from ec2alternate import settings
 from ec2alternate.instances import InstanceManager
-from ec2alternate.utils import create_dir, install_default_settings
+from ec2alternate.utils import (create_dir, install_default_settings,
+                                reverse_instances)
 
 
 def bootstrap():
@@ -64,30 +65,44 @@ def main(argv=None, out=sys.stdout):
         access_key_id = settings.AWS_ACCESS_KEY_ID
         secret_access_key = settings.AWS_SECRET_ACCESS_KEY
 
-    im = InstanceManager(access_key_id, secret_access_key, instances)
-
     if cmd == 'status':
+        im = InstanceManager(access_key_id, secret_access_key, instances)
         statuses = im.status()
         for id, state in statuses:
             msg = "%s %s\n" % (id, state)
             out.write(msg)
     if cmd == 'start':
+        im = InstanceManager(access_key_id, secret_access_key, instances)
         statuses = im.start()
         for id, state in statuses:
             msg = "%s %s\n" % (id, state)
             out.write(msg)
     if cmd == 'stop':
+        im = InstanceManager(access_key_id, secret_access_key, instances)
         statuses = im.stop()
         for id, state in statuses:
             msg = "%s %s\n" % (id, state)
             out.write(msg)
     if cmd == 'restart':
+        im = InstanceManager(access_key_id, secret_access_key, instances)
         statuses = im.stop()
         statuses = im.start()
         for id, state in statuses:
             msg = "%s %s\n" % (id, state)
             out.write(msg)
-
+    if cmd == 'now':
+        instances = reverse_instances(instances, settings.STATE_FILE)
+        for index, instance in enumerate(instances):
+            if index % 2:
+                im = InstanceManager(access_key_id, secret_access_key,
+                                     [instance])
+                statuses = im.stop()
+                statuses = im.start()
+        im = InstanceManager(access_key_id, secret_access_key, instances)
+        statuses = im.status()
+        for id, state in statuses:
+            msg = "%s %s\n" % (id, state)
+            out.write(msg)
     return 0
 
 

@@ -1,4 +1,5 @@
 import os
+import pickle
 
 
 def create_dir(directory):
@@ -16,3 +17,14 @@ def install_default_settings(settings_file):
                            "AWS_SECRET_ACCESS_KEY = ''\n"
         with open(settings_file, 'w') as f:
             f.write(default_settings)
+
+
+def reverse_instances(instance_list, state_file):
+    """Reverse instance_list and store latest state."""
+    if os.path.exists(state_file):
+        with open(state_file) as f:
+            instance_list = pickle.load(f)
+    instance_list.reverse()
+    with open(state_file, 'w') as f:
+        pickle.dump(instance_list, f)
+    return instance_list

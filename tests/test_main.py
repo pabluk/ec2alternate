@@ -20,6 +20,9 @@ class MainTest(unittest.TestCase):
         self.mock_method = self.patcher.start()
         self.mock_method.return_value = get_instances_mock(self.instance_ids)
 
+    def tearDown(self):
+        self.patcher.stop()
+
     def test_without_arguments(self):
         sys.stderr = StringIO()
         self.assertRaises(SystemExit, main)
@@ -48,8 +51,20 @@ class MainTest(unittest.TestCase):
         self.assertEqual(self.out.getvalue(),
             'Instance:i-1111 running\nInstance:i-2222 running\n')
 
-    def tearDown(self):
-        self.patcher.stop()
+    def test_cmd_now(self):
+        self.out = StringIO()
+        argv = self._get_argv('now')
+        main(argv=argv, out=self.out)
+        self.assertEqual(self.out.getvalue(),
+            'Instance:i-1111 running\nInstance:i-2222 running\n')
+
+        instance_ids = self.mock_method.call_args[0][0]
+        self.mock_method.return_value = get_instances_mock(instance_ids)
+        self.out = StringIO()
+        argv = self._get_argv('now')
+        main(argv=argv, out=self.out)
+        self.assertEqual(self.out.getvalue(),
+            'Instance:i-2222 running\nInstance:i-1111 running\n')
 
     def _get_argv(self, cmd):
         argv = []

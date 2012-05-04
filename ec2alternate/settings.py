@@ -2,8 +2,9 @@ import os.path
 # App specific settings
 APP_DIR = os.path.expanduser('~/.ec2alternate')
 USER_SETTINGS = os.path.join(APP_DIR, 'settings.py')
+STATE_FILE = os.path.join(APP_DIR, 'state.db')
 
-COMMANDS = ['status', 'start', 'stop', 'restart']
+COMMANDS = ['status', 'start', 'stop', 'restart', 'now']
 
 # Default settings
 INSTANCE_ID1 = ''
