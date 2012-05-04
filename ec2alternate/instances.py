@@ -21,7 +21,7 @@ class InstanceManager(object):
         """
         statuses = []
         for instance in self._get_instances(self.instance_id_list):
-            statuses.append((instance, instance.state))
+            statuses.append((instance, instance.state, instance.ip_address))
         return statuses
 
     def start(self):
@@ -37,7 +37,7 @@ class InstanceManager(object):
             while instance.state != 'running':
                 time.sleep(self.wait_update)
                 instance.update()
-            statuses.append((instance, instance.state))
+            statuses.append((instance, instance.state, instance.ip_address))
         return statuses
 
     def stop(self):
@@ -53,7 +53,7 @@ class InstanceManager(object):
             while instance.state != 'stopped':
                 time.sleep(self.wait_update)
                 instance.update()
-            statuses.append((instance, instance.state))
+            statuses.append((instance, instance.state, instance.ip_address))
         return statuses
 
     def _get_instances(self, instance_id_list):

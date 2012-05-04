@@ -16,13 +16,13 @@ class InstanceManagerTest(unittest.TestCase):
 
     def test_start(self):
         statuses = self.im.start()
-        for id, state in statuses:
+        for id, state, ip_addr in statuses:
             self.assertEqual(state, 'running')
         self.assertEqual(len(statuses), len(self.instance_list))
 
     def test_stop(self):
         statuses = self.im.stop()
-        for id, state in statuses:
+        for id, state, ip_addr in statuses:
             self.assertEqual(state, 'stopped')
         self.assertEqual(len(statuses), len(self.instance_list))
 

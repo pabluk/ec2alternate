@@ -68,27 +68,27 @@ def main(argv=None, out=sys.stdout):
     if cmd == 'status':
         im = InstanceManager(access_key_id, secret_access_key, instances)
         statuses = im.status()
-        for id, state in statuses:
-            msg = "%s %s\n" % (id, state)
+        for id, state, ip_addr in statuses:
+            msg = "%s %s %s\n" % (id, state, ip_addr)
             out.write(msg)
     if cmd == 'start':
         im = InstanceManager(access_key_id, secret_access_key, instances)
         statuses = im.start()
-        for id, state in statuses:
-            msg = "%s %s\n" % (id, state)
+        for id, state, ip_addr in statuses:
+            msg = "%s %s %s\n" % (id, state, ip_addr)
             out.write(msg)
     if cmd == 'stop':
         im = InstanceManager(access_key_id, secret_access_key, instances)
         statuses = im.stop()
-        for id, state in statuses:
-            msg = "%s %s\n" % (id, state)
+        for id, state, ip_addr in statuses:
+            msg = "%s %s %s\n" % (id, state, ip_addr)
             out.write(msg)
     if cmd == 'restart':
         im = InstanceManager(access_key_id, secret_access_key, instances)
         statuses = im.stop()
         statuses = im.start()
-        for id, state in statuses:
-            msg = "%s %s\n" % (id, state)
+        for id, state, ip_addr in statuses:
+            msg = "%s %s %s\n" % (id, state, ip_addr)
             out.write(msg)
     if cmd == 'now':
         instances = reverse_instances(instances, settings.STATE_FILE)
@@ -100,8 +100,8 @@ def main(argv=None, out=sys.stdout):
                 statuses = im.start()
         im = InstanceManager(access_key_id, secret_access_key, instances)
         statuses = im.status()
-        for id, state in statuses:
-            msg = "%s %s\n" % (id, state)
+        for id, state, ip_addr in statuses:
+            msg = "%s %s %s\n" % (id, state, ip_addr)
             out.write(msg)
     return 0
 

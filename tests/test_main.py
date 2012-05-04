@@ -30,41 +30,47 @@ class MainTest(unittest.TestCase):
     def test_cmd_status(self):
         argv = self._get_argv('status')
         main(argv=argv, out=self.out)
-        self.assertEqual(self.out.getvalue(),
-            'Instance:i-1111 stopped\nInstance:i-2222 stopped\n')
+        output_lines = self.out.getvalue().splitlines()
+        self.assertTrue(output_lines[0].startswith('Instance:i-1111 stopped'))
+        self.assertTrue(output_lines[1].startswith('Instance:i-2222 stopped'))
 
     def test_cmd_start(self):
         argv = self._get_argv('start')
         main(argv=argv, out=self.out)
-        self.assertEqual(self.out.getvalue(),
-            'Instance:i-1111 running\nInstance:i-2222 running\n')
+        output_lines = self.out.getvalue().splitlines()
+        self.assertTrue(output_lines[0].startswith('Instance:i-1111 running'))
+        self.assertTrue(output_lines[1].startswith('Instance:i-2222 running'))
 
     def test_cmd_stop(self):
         argv = self._get_argv('stop')
         main(argv=argv, out=self.out)
-        self.assertEqual(self.out.getvalue(),
-            'Instance:i-1111 stopped\nInstance:i-2222 stopped\n')
+        output_lines = self.out.getvalue().splitlines()
+        self.assertTrue(output_lines[0].startswith('Instance:i-1111 stopped'))
+        self.assertTrue(output_lines[1].startswith('Instance:i-2222 stopped'))
 
     def test_cmd_restart(self):
         argv = self._get_argv('restart')
         main(argv=argv, out=self.out)
-        self.assertEqual(self.out.getvalue(),
-            'Instance:i-1111 running\nInstance:i-2222 running\n')
+        output_lines = self.out.getvalue().splitlines()
+        self.assertTrue(output_lines[0].startswith('Instance:i-1111 running'))
+        self.assertTrue(output_lines[1].startswith('Instance:i-2222 running'))
 
     def test_cmd_now(self):
         self.out = StringIO()
         argv = self._get_argv('now')
         main(argv=argv, out=self.out)
-        self.assertEqual(self.out.getvalue(),
-            'Instance:i-1111 running\nInstance:i-2222 running\n')
+        output_lines = self.out.getvalue().splitlines()
+        self.assertTrue(output_lines[0].startswith('Instance:i-1111 running'))
+        self.assertTrue(output_lines[1].startswith('Instance:i-2222 running'))
 
         instance_ids = self.mock_method.call_args[0][0]
         self.mock_method.return_value = get_instances_mock(instance_ids)
         self.out = StringIO()
         argv = self._get_argv('now')
         main(argv=argv, out=self.out)
-        self.assertEqual(self.out.getvalue(),
-            'Instance:i-2222 running\nInstance:i-1111 running\n')
+        output_lines = self.out.getvalue().splitlines()
+        self.assertTrue(output_lines[0].startswith('Instance:i-2222 running'))
+        self.assertTrue(output_lines[1].startswith('Instance:i-1111 running'))
 
     def _get_argv(self, cmd):
         argv = []
