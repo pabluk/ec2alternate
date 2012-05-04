@@ -31,8 +31,8 @@ class MainTest(unittest.TestCase):
         argv = self._get_argv('status')
         main(argv=argv, out=self.out)
         output_lines = self.out.getvalue().splitlines()
-        self.assertTrue(output_lines[0].startswith('Instance:i-1111 stopped'))
-        self.assertTrue(output_lines[1].startswith('Instance:i-2222 stopped'))
+        self.assertTrue(output_lines[0].startswith('Instance:i-1111 (name-i-1111) stopped'))
+        self.assertTrue(output_lines[1].startswith('Instance:i-2222 (name-i-2222) stopped'))
 
     def test_cmd_start(self):
         argv = self._get_argv('start')
@@ -60,8 +60,8 @@ class MainTest(unittest.TestCase):
         argv = self._get_argv('now')
         main(argv=argv, out=self.out)
         output_lines = self.out.getvalue().splitlines()
-        self.assertTrue(output_lines[0].startswith('Instance:i-1111 running'))
-        self.assertTrue(output_lines[1].startswith('Instance:i-2222 running'))
+        self.assertTrue(output_lines[0].startswith('Instance:i-1111 (name-i-1111) running'))
+        self.assertTrue(output_lines[1].startswith('Instance:i-2222 (name-i-2222) running'))
 
         instance_ids = self.mock_method.call_args[0][0]
         self.mock_method.return_value = get_instances_mock(instance_ids)
@@ -69,8 +69,8 @@ class MainTest(unittest.TestCase):
         argv = self._get_argv('now')
         main(argv=argv, out=self.out)
         output_lines = self.out.getvalue().splitlines()
-        self.assertTrue(output_lines[0].startswith('Instance:i-2222 running'))
-        self.assertTrue(output_lines[1].startswith('Instance:i-1111 running'))
+        self.assertTrue(output_lines[0].startswith('Instance:i-2222 (name-i-2222) running'))
+        self.assertTrue(output_lines[1].startswith('Instance:i-1111 (name-i-1111) running'))
 
     def _get_argv(self, cmd):
         argv = []

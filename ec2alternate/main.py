@@ -68,8 +68,8 @@ def main(argv=None, out=sys.stdout):
     if cmd == 'status':
         im = InstanceManager(access_key_id, secret_access_key, instances)
         statuses = im.status()
-        for id, state, ip_addr in statuses:
-            msg = "%s %s %s\n" % (id, state, ip_addr)
+        for status in statuses:
+            msg = "%s (%s) %s %15s started at %s\n" % status
             out.write(msg)
     if cmd == 'start':
         im = InstanceManager(access_key_id, secret_access_key, instances)
@@ -100,8 +100,8 @@ def main(argv=None, out=sys.stdout):
                 statuses = im.start()
         im = InstanceManager(access_key_id, secret_access_key, instances)
         statuses = im.status()
-        for id, state, ip_addr in statuses:
-            msg = "%s %s %s\n" % (id, state, ip_addr)
+        for status in statuses:
+            msg = "%s (%s) %s %15s started at %s\n" % status
             out.write(msg)
     return 0
 
