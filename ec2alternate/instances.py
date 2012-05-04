@@ -74,7 +74,9 @@ class InstanceManager(object):
         return instances
 
     def _localtime(self, utc_string):
-        """Convert an UTC string datetime (2012-03-28T12:00:25.000Z) to localtime."""
+        """
+        Convert an UTC string datetime (2012-03-28T12:00:25.000Z) to localtime.
+        """
         utc = datetime.strptime(utc_string, '%Y-%m-%dT%H:%M:%S.000Z')
         localdelta = timedelta(seconds=time.timezone)
         if time.daylight:
